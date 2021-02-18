@@ -1,16 +1,44 @@
 package hn_test
 
 import (
+	"fmt"
+	"io"
 	"net/http"
+	"os"
 	"testing"
 
 	"github.com/pkuca/hn"
 )
 
+// http://hassansin.github.io/Unit-Testing-http-client-in-Go#2-by-replacing-httptransport
+type RoundTripFunc func(req *http.Request) *http.Response
+
+func (f RoundTripFunc) RoundTrip(req *http.Request) (*http.Response, error) {
+	return f(req), nil
+}
+
+func newTestClient(fn RoundTripFunc) *http.Client {
+	return &http.Client{
+		Transport: RoundTripFunc(fn),
+	}
+}
+
 func TestItem(t *testing.T) {
 	id := 8863
 
-	result, err := hn.NewClient(nil).Item(id)
+	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+	testContent, err := os.Open(testContentPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	testClient := newTestClient(func(req *http.Request) *http.Response {
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       io.NopCloser(testContent)}
+	})
+
+	result, err := hn.NewClient(testClient).Item(id)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -23,7 +51,19 @@ func TestItem(t *testing.T) {
 func TestUser(t *testing.T) {
 	id := "asicsp"
 
-	result, err := hn.NewClient(nil).User(id)
+	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+	testContent, err := os.Open(testContentPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	testClient := newTestClient(func(req *http.Request) *http.Response {
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       io.NopCloser(testContent)}
+	})
+
+	result, err := hn.NewClient(testClient).User(id)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -36,7 +76,19 @@ func TestUser(t *testing.T) {
 func TestItemComment(t *testing.T) {
 	id := 2921983
 
-	result, err := hn.NewClient(nil).Item(id)
+	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+	testContent, err := os.Open(testContentPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	testClient := newTestClient(func(req *http.Request) *http.Response {
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       io.NopCloser(testContent)}
+	})
+
+	result, err := hn.NewClient(testClient).Item(id)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -49,7 +101,19 @@ func TestItemComment(t *testing.T) {
 func TestItemAsk(t *testing.T) {
 	id := 121003
 
-	result, err := hn.NewClient(nil).Item(id)
+	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+	testContent, err := os.Open(testContentPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	testClient := newTestClient(func(req *http.Request) *http.Response {
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       io.NopCloser(testContent)}
+	})
+
+	result, err := hn.NewClient(testClient).Item(id)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -62,7 +126,19 @@ func TestItemAsk(t *testing.T) {
 func TestItemJob(t *testing.T) {
 	id := 192327
 
-	result, err := hn.NewClient(nil).Item(id)
+	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+	testContent, err := os.Open(testContentPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	testClient := newTestClient(func(req *http.Request) *http.Response {
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       io.NopCloser(testContent)}
+	})
+
+	result, err := hn.NewClient(testClient).Item(id)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -75,7 +151,19 @@ func TestItemJob(t *testing.T) {
 func TestItemPoll(t *testing.T) {
 	id := 126809
 
-	result, err := hn.NewClient(nil).Item(id)
+	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+	testContent, err := os.Open(testContentPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	testClient := newTestClient(func(req *http.Request) *http.Response {
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       io.NopCloser(testContent)}
+	})
+
+	result, err := hn.NewClient(testClient).Item(id)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -88,7 +176,19 @@ func TestItemPoll(t *testing.T) {
 func TestItemPollOpt(t *testing.T) {
 	id := 126810
 
-	result, err := hn.NewClient(nil).Item(id)
+	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+	testContent, err := os.Open(testContentPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	testClient := newTestClient(func(req *http.Request) *http.Response {
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       io.NopCloser(testContent)}
+	})
+
+	result, err := hn.NewClient(testClient).Item(id)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -99,7 +199,19 @@ func TestItemPollOpt(t *testing.T) {
 }
 
 func TestMaxItem(t *testing.T) {
-	result, err := hn.NewClient(nil).MaxItem()
+	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+	testContent, err := os.Open(testContentPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	testClient := newTestClient(func(req *http.Request) *http.Response {
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       io.NopCloser(testContent)}
+	})
+
+	result, err := hn.NewClient(testClient).MaxItem()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -110,7 +222,19 @@ func TestMaxItem(t *testing.T) {
 }
 
 func TestTopStories(t *testing.T) {
-	result, err := hn.NewClient(nil).TopStories()
+	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+	testContent, err := os.Open(testContentPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	testClient := newTestClient(func(req *http.Request) *http.Response {
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       io.NopCloser(testContent)}
+	})
+
+	result, err := hn.NewClient(testClient).TopStories()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -121,7 +245,19 @@ func TestTopStories(t *testing.T) {
 }
 
 func TestNewStories(t *testing.T) {
-	result, err := hn.NewClient(nil).NewStories()
+	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+	testContent, err := os.Open(testContentPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	testClient := newTestClient(func(req *http.Request) *http.Response {
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       io.NopCloser(testContent)}
+	})
+
+	result, err := hn.NewClient(testClient).NewStories()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -132,7 +268,19 @@ func TestNewStories(t *testing.T) {
 }
 
 func TestBestStories(t *testing.T) {
-	result, err := hn.NewClient(nil).BestStories()
+	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+	testContent, err := os.Open(testContentPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	testClient := newTestClient(func(req *http.Request) *http.Response {
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       io.NopCloser(testContent)}
+	})
+
+	result, err := hn.NewClient(testClient).BestStories()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -143,7 +291,19 @@ func TestBestStories(t *testing.T) {
 }
 
 func TestAskStories(t *testing.T) {
-	result, err := hn.NewClient(nil).AskStories()
+	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+	testContent, err := os.Open(testContentPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	testClient := newTestClient(func(req *http.Request) *http.Response {
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       io.NopCloser(testContent)}
+	})
+
+	result, err := hn.NewClient(testClient).AskStories()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -154,7 +314,19 @@ func TestAskStories(t *testing.T) {
 }
 
 func TestShowStories(t *testing.T) {
-	result, err := hn.NewClient(nil).ShowStories()
+	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+	testContent, err := os.Open(testContentPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	testClient := newTestClient(func(req *http.Request) *http.Response {
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       io.NopCloser(testContent)}
+	})
+
+	result, err := hn.NewClient(testClient).ShowStories()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -165,7 +337,19 @@ func TestShowStories(t *testing.T) {
 }
 
 func TestJobStories(t *testing.T) {
-	result, err := hn.NewClient(nil).JobStories()
+	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+	testContent, err := os.Open(testContentPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	testClient := newTestClient(func(req *http.Request) *http.Response {
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       io.NopCloser(testContent)}
+	})
+
+	result, err := hn.NewClient(testClient).JobStories()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -176,7 +360,19 @@ func TestJobStories(t *testing.T) {
 }
 
 func TestUpdates(t *testing.T) {
-	result, err := hn.NewClient(nil).Updates()
+	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+	testContent, err := os.Open(testContentPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	testClient := newTestClient(func(req *http.Request) *http.Response {
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       io.NopCloser(testContent)}
+	})
+
+	result, err := hn.NewClient(testClient).Updates()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -186,19 +382,6 @@ func TestUpdates(t *testing.T) {
 	}
 
 	if len(result.Profiles) == 0 {
-		t.Fatal("no result")
-	}
-}
-
-func TestWithProvidedHTTPClient(t *testing.T) {
-	cl := &http.Client{}
-
-	result, err := hn.NewClient(cl).TopStories()
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if len(result) == 0 {
 		t.Fatal("no result")
 	}
 }
