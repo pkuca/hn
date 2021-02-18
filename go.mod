@@ -1,3 +1,3 @@
 module github.com/pkuca/hn
 
-go 1.15
+go 1.16
