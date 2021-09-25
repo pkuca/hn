@@ -1,4 +1,4 @@
-// Package hn is based on https://github.com/HackerNews/API
+// Package hn provides an HTTP client with methods mapped to https://github.com/HackerNews/API
 package hn
 
 import (
@@ -11,14 +11,17 @@ import (
 	"strconv"
 )
 
+// Client represents the "HN Client" - it's just an http client with a base
+// URL. Methods are mapped to the hackernews firebase API described here:
+// https://github.com/HackerNews/API
 type Client struct {
 	cl      *http.Client
 	BaseURL url.URL
 }
 
-// NewClient is the init func for package use. The returned Client's methods
-// wrap requests to firebase json endpoints. If an *http.Client is not provided,
-// there is a fallback to *http.DefaultClient.
+// NewClient creates an "HN Client". Its methods wrap requests to firebase json
+// API endpoints. If an *http.Client is not provided, an *http.DefaultClient is
+// used.
 func NewClient(c *http.Client) *Client {
 	u := url.URL{
 		Scheme: "https",
@@ -26,7 +29,7 @@ func NewClient(c *http.Client) *Client {
 		Path:   "v0",
 	}
 
-	// Use the optional *http.Client from invocation.
+	// Use passed *http.Client if provided.
 	if c != nil {
 		return &Client{cl: c, BaseURL: u}
 	}
