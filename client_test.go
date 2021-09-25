@@ -35,7 +35,8 @@ func TestItem(t *testing.T) {
 	testClient := newTestClient(func(req *http.Request) *http.Response {
 		return &http.Response{
 			StatusCode: http.StatusOK,
-			Body:       io.NopCloser(testContent)}
+			Body:       io.NopCloser(testContent),
+		}
 	})
 
 	result, err := hn.NewClient(testClient).Item(id)
@@ -60,7 +61,8 @@ func TestUser(t *testing.T) {
 	testClient := newTestClient(func(req *http.Request) *http.Response {
 		return &http.Response{
 			StatusCode: http.StatusOK,
-			Body:       io.NopCloser(testContent)}
+			Body:       io.NopCloser(testContent),
+		}
 	})
 
 	result, err := hn.NewClient(testClient).User(id)
@@ -85,7 +87,8 @@ func TestItemComment(t *testing.T) {
 	testClient := newTestClient(func(req *http.Request) *http.Response {
 		return &http.Response{
 			StatusCode: http.StatusOK,
-			Body:       io.NopCloser(testContent)}
+			Body:       io.NopCloser(testContent),
+		}
 	})
 
 	result, err := hn.NewClient(testClient).Item(id)
@@ -110,7 +113,8 @@ func TestItemAsk(t *testing.T) {
 	testClient := newTestClient(func(req *http.Request) *http.Response {
 		return &http.Response{
 			StatusCode: http.StatusOK,
-			Body:       io.NopCloser(testContent)}
+			Body:       io.NopCloser(testContent),
+		}
 	})
 
 	result, err := hn.NewClient(testClient).Item(id)
@@ -135,7 +139,8 @@ func TestItemJob(t *testing.T) {
 	testClient := newTestClient(func(req *http.Request) *http.Response {
 		return &http.Response{
 			StatusCode: http.StatusOK,
-			Body:       io.NopCloser(testContent)}
+			Body:       io.NopCloser(testContent),
+		}
 	})
 
 	result, err := hn.NewClient(testClient).Item(id)
@@ -160,7 +165,8 @@ func TestItemPoll(t *testing.T) {
 	testClient := newTestClient(func(req *http.Request) *http.Response {
 		return &http.Response{
 			StatusCode: http.StatusOK,
-			Body:       io.NopCloser(testContent)}
+			Body:       io.NopCloser(testContent),
+		}
 	})
 
 	result, err := hn.NewClient(testClient).Item(id)
@@ -185,7 +191,8 @@ func TestItemPollOpt(t *testing.T) {
 	testClient := newTestClient(func(req *http.Request) *http.Response {
 		return &http.Response{
 			StatusCode: http.StatusOK,
-			Body:       io.NopCloser(testContent)}
+			Body:       io.NopCloser(testContent),
+		}
 	})
 
 	result, err := hn.NewClient(testClient).Item(id)
@@ -208,7 +215,8 @@ func TestMaxItem(t *testing.T) {
 	testClient := newTestClient(func(req *http.Request) *http.Response {
 		return &http.Response{
 			StatusCode: http.StatusOK,
-			Body:       io.NopCloser(testContent)}
+			Body:       io.NopCloser(testContent),
+		}
 	})
 
 	result, err := hn.NewClient(testClient).MaxItem()
@@ -231,7 +239,8 @@ func TestTopStories(t *testing.T) {
 	testClient := newTestClient(func(req *http.Request) *http.Response {
 		return &http.Response{
 			StatusCode: http.StatusOK,
-			Body:       io.NopCloser(testContent)}
+			Body:       io.NopCloser(testContent),
+		}
 	})
 
 	result, err := hn.NewClient(testClient).TopStories()
@@ -254,7 +263,8 @@ func TestNewStories(t *testing.T) {
 	testClient := newTestClient(func(req *http.Request) *http.Response {
 		return &http.Response{
 			StatusCode: http.StatusOK,
-			Body:       io.NopCloser(testContent)}
+			Body:       io.NopCloser(testContent),
+		}
 	})
 
 	result, err := hn.NewClient(testClient).NewStories()
@@ -277,7 +287,8 @@ func TestBestStories(t *testing.T) {
 	testClient := newTestClient(func(req *http.Request) *http.Response {
 		return &http.Response{
 			StatusCode: http.StatusOK,
-			Body:       io.NopCloser(testContent)}
+			Body:       io.NopCloser(testContent),
+		}
 	})
 
 	result, err := hn.NewClient(testClient).BestStories()
@@ -300,7 +311,8 @@ func TestAskStories(t *testing.T) {
 	testClient := newTestClient(func(req *http.Request) *http.Response {
 		return &http.Response{
 			StatusCode: http.StatusOK,
-			Body:       io.NopCloser(testContent)}
+			Body:       io.NopCloser(testContent),
+		}
 	})
 
 	result, err := hn.NewClient(testClient).AskStories()
@@ -323,7 +335,8 @@ func TestShowStories(t *testing.T) {
 	testClient := newTestClient(func(req *http.Request) *http.Response {
 		return &http.Response{
 			StatusCode: http.StatusOK,
-			Body:       io.NopCloser(testContent)}
+			Body:       io.NopCloser(testContent),
+		}
 	})
 
 	result, err := hn.NewClient(testClient).ShowStories()
@@ -346,7 +359,8 @@ func TestJobStories(t *testing.T) {
 	testClient := newTestClient(func(req *http.Request) *http.Response {
 		return &http.Response{
 			StatusCode: http.StatusOK,
-			Body:       io.NopCloser(testContent)}
+			Body:       io.NopCloser(testContent),
+		}
 	})
 
 	result, err := hn.NewClient(testClient).JobStories()
@@ -369,7 +383,8 @@ func TestUpdates(t *testing.T) {
 	testClient := newTestClient(func(req *http.Request) *http.Response {
 		return &http.Response{
 			StatusCode: http.StatusOK,
-			Body:       io.NopCloser(testContent)}
+			Body:       io.NopCloser(testContent),
+		}
 	})
 
 	result, err := hn.NewClient(testClient).Updates()
