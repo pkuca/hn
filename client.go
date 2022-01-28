@@ -34,7 +34,7 @@ func NewClient(c *http.Client) *Client {
 		return &Client{cl: c, BaseURL: u}
 	}
 
-	// No *http.Client was provied - use default.
+	// No *http.Client was provided - use default.
 	return &Client{cl: http.DefaultClient, BaseURL: u}
 }
 

@@ -16,11 +16,12 @@ topStories, _ := client.TopStories()
 ```
 
 ## Custom Client
+
 ```golang
 httpClient := &http.Client{
-	Timeout: time.Second * 20,
+    Timeout: time.Second * 20,
 }
 
-hnClient := hn.NewClient(nil)
-topStories, _ := client.TopStories()
+hnClient := hn.NewClient(httpClient)
+topStories, _ := hnClient.TopStories()
 ```
