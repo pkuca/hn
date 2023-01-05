@@ -2,6 +2,7 @@ package hn
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"html"
 	"strings"
@@ -18,6 +19,17 @@ type User struct {
 	Submitted []uint    `json:"submitted"`
 }
 
+var (
+	errUserUnmarshalID        = errors.New("user unmarshal failed on 'id' field")
+	errUserUnmarshalDelay     = errors.New("user unmarshal failed on 'delay' field")
+	errUserUnmarshalCreated   = errors.New("user unmarshal failed on 'created' field")
+	errUserUnmarshalKarma     = errors.New("user unmarshal failed on 'karma' field")
+	errUserUnmarshalAbout     = errors.New("user unmarshal failed on 'about' field")
+	errUserUnmarshalSubmitted = errors.New("user unmarshal failed on 'submited' field")
+
+	errUserUnmarshalUnknownKey = errors.New("user unmarshal failed on unknown key")
+)
+
 func (u *User) UnmarshalJSON(b []byte) error {
 	input := map[string]interface{}{}
 	if err := json.Unmarshal(b, &input); err != nil {
@@ -27,24 +39,60 @@ func (u *User) UnmarshalJSON(b []byte) error {
 	for k, v := range input {
 		switch strings.ToLower(k) {
 		case "id":
-			u.ID = v.(string)
-		// case "delay":
-		// 	u.Delay = v.(uint)
-		case "created":
-			u.Created = time.Unix(int64(v.(float64)), 0)
-		case "karma":
-			u.Karma = uint(v.(float64))
-		case "about":
-			u.About = html.UnescapeString(v.(string))
-		case "submitted":
-			converted := []uint{}
-
-			for _, sub := range v.([]interface{}) {
-				f := sub.(float64)
-				converted = append(converted, uint(f))
+			strID, ok := v.(string)
+			if !ok {
+				return fmt.Errorf("%w: %v", errUserUnmarshalID, v)
 			}
 
-			u.Submitted = converted
+			u.ID = strID
+		case "delay":
+			uintDelay, ok := v.(uint)
+			if !ok {
+				return fmt.Errorf("%w: %v", errUserUnmarshalDelay, v)
+			}
+
+			u.Delay = uintDelay
+		case "created":
+			floatCreated, ok := v.(float64)
+			if !ok {
+				return fmt.Errorf("%w: %v", errUserUnmarshalCreated, v)
+			}
+
+			u.Created = time.Unix(int64(floatCreated), 0)
+		case "karma":
+			floatKarma, ok := v.(float64)
+			if !ok {
+				return fmt.Errorf("%w: %v", errUserUnmarshalKarma, v)
+			}
+
+			u.Karma = uint(floatKarma)
+		case "about":
+			strAbout, ok := v.(string)
+			if !ok {
+				return fmt.Errorf("%w: %v", errUserUnmarshalAbout, v)
+			}
+
+			u.About = html.UnescapeString(strAbout)
+		case "submitted":
+			ret := []uint{}
+
+			submitted, ok := v.([]interface{})
+			if !ok {
+				return fmt.Errorf("%w: %v", errUserUnmarshalSubmitted, v)
+			}
+
+			for _, s := range submitted {
+				f, ok := s.(float64)
+				if !ok {
+					return fmt.Errorf("%w: %v", errUserUnmarshalSubmitted, v)
+				}
+
+				ret = append(ret, uint(f))
+			}
+
+			u.Submitted = ret
+		default:
+			return fmt.Errorf("%w: %v", errUserUnmarshalUnknownKey, strings.ToLower(k))
 		}
 	}
 
