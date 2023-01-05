@@ -12,11 +12,11 @@ import (
 // User is based on https://github.com/HackerNews/API#users
 type User struct {
 	ID        string    `json:"id"`
-	Delay     uint      `json:"delay"`
+	Delay     int       `json:"delay"`
 	Created   time.Time `json:"created"`
-	Karma     uint      `json:"karma"`
+	Karma     int       `json:"karma"`
 	About     string    `json:"about"`
-	Submitted []uint    `json:"submitted"`
+	Submitted []int     `json:"submitted"`
 }
 
 var (
@@ -46,12 +46,12 @@ func (u *User) UnmarshalJSON(b []byte) error {
 
 			u.ID = strID
 		case "delay":
-			uintDelay, ok := v.(uint)
+			intDelay, ok := v.(int)
 			if !ok {
 				return fmt.Errorf("%w: %v", errUserUnmarshalDelay, v)
 			}
 
-			u.Delay = uintDelay
+			u.Delay = intDelay
 		case "created":
 			floatCreated, ok := v.(float64)
 			if !ok {
@@ -65,7 +65,7 @@ func (u *User) UnmarshalJSON(b []byte) error {
 				return fmt.Errorf("%w: %v", errUserUnmarshalKarma, v)
 			}
 
-			u.Karma = uint(floatKarma)
+			u.Karma = int(floatKarma)
 		case "about":
 			strAbout, ok := v.(string)
 			if !ok {
@@ -74,7 +74,7 @@ func (u *User) UnmarshalJSON(b []byte) error {
 
 			u.About = html.UnescapeString(strAbout)
 		case "submitted":
-			ret := []uint{}
+			ret := []int{}
 
 			submitted, ok := v.([]interface{})
 			if !ok {
@@ -87,7 +87,7 @@ func (u *User) UnmarshalJSON(b []byte) error {
 					return fmt.Errorf("%w: %v", errUserUnmarshalSubmitted, v)
 				}
 
-				ret = append(ret, uint(f))
+				ret = append(ret, int(f))
 			}
 
 			u.Submitted = ret
