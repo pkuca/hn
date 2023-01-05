@@ -74,7 +74,7 @@ func (c Client) User(id string) (*User, error) {
 	return result, nil
 }
 
-func (c Client) MaxItem() (uint64, error) {
+func (c Client) MaxItem() (int, error) {
 	route := c.BaseURL
 	route.Path += "/maxitem.json"
 
@@ -83,9 +83,9 @@ func (c Client) MaxItem() (uint64, error) {
 		return 0, err
 	}
 
-	result, err := strconv.ParseUint(string(data), 10, 64)
+	result, err := strconv.Atoi(string(data))
 	if err != nil {
-		return 0, fmt.Errorf("strconv.ParseUint: %w", err)
+		return 0, fmt.Errorf("strconv.Atoi: %w", err)
 	}
 
 	return result, nil
