@@ -28,7 +28,22 @@ type Item struct {
 	Dead        bool
 }
 
-var errUnknownKey = errors.New("unknown key")
+var (
+	errItemUnmarshalID          = errors.New("item unmarshal failed on 'id' field")
+	errItemUnmarshalType        = errors.New("item unmarshal failed on 'type' field")
+	errItemUnmarshalBy          = errors.New("item unmarshal failed on 'by' field")
+	errItemUnmarshalTime        = errors.New("item unmarshal failed on 'time' field")
+	errItemUnmarshalText        = errors.New("item unmarshal failed on 'text' field")
+	errItemUnmarshalParent      = errors.New("item unmarshal failed on 'parent' field")
+	errItemUnmarshalPoll        = errors.New("item unmarshal failed on 'poll' field")
+	errItemUnmarshalKids        = errors.New("item unmarshal failed on 'kids' field")
+	errItemUnmarshalScore       = errors.New("item unmarshal failed on 'score' field")
+	errItemUnmarshalTitle       = errors.New("item unmarshal failed on 'title' field")
+	errItemUnmarshalParts       = errors.New("item unmarshal failed on 'parts' field")
+	errItemUnmarshalDescendants = errors.New("item unmarshal failed on 'descendants' field")
+
+	errItemUnmarshalUnknownKey = errors.New("item unmarshal failed on unknown key")
+)
 
 func (i *Item) UnmarshalJSON(b []byte) error {
 	input := map[string]interface{}{}
@@ -39,28 +54,72 @@ func (i *Item) UnmarshalJSON(b []byte) error {
 	for k, v := range input {
 		switch strings.ToLower(k) {
 		case "id":
-			i.ID = int(v.(float64))
-		case "type":
-			i.Type = v.(string)
-		case "by":
-			i.By = v.(string)
-		case "time":
-			i.Time = time.Unix(int64(v.(float64)), 0)
-		case "text":
-			i.Text = v.(string)
-		case "parent":
-			i.Parent = int(v.(float64))
-		case "poll":
-			i.Poll = int(v.(float64))
-		case "kids":
-			converted := []int{}
-
-			for _, sub := range v.([]interface{}) {
-				f := sub.(float64)
-				converted = append(converted, int(f))
+			floatID, ok := v.(float64)
+			if !ok {
+				return fmt.Errorf("%w: %v", errItemUnmarshalID, v)
 			}
 
-			i.Kids = converted
+			i.ID = int(floatID)
+		case "type":
+			strType, ok := v.(string)
+			if !ok {
+				return fmt.Errorf("%w: %v", errItemUnmarshalType, v)
+			}
+
+			i.Type = strType
+		case "by":
+			strBy, ok := v.(string)
+			if !ok {
+				return fmt.Errorf("%w: %v", errItemUnmarshalBy, v)
+			}
+
+			i.By = strBy
+		case "time":
+			floatTime, ok := v.(float64)
+			if !ok {
+				return fmt.Errorf("%w: %v", errItemUnmarshalTime, v)
+			}
+
+			i.Time = time.Unix(int64(floatTime), 0)
+		case "text":
+			strText, ok := v.(string)
+			if !ok {
+				return fmt.Errorf("%w: %v", errItemUnmarshalText, v)
+			}
+
+			i.Text = strText
+		case "parent":
+			floatParent, ok := v.(float64)
+			if !ok {
+				return fmt.Errorf("%w: %v", errItemUnmarshalParent, v)
+			}
+
+			i.Parent = int(floatParent)
+		case "poll":
+			floatPoll, ok := v.(float64)
+			if !ok {
+				return fmt.Errorf("%w: %v", errItemUnmarshalPoll, v)
+			}
+
+			i.Poll = int(floatPoll)
+		case "kids":
+			ret := []int{}
+
+			kids, ok := v.([]interface{})
+			if !ok {
+				return fmt.Errorf("%w: %v", errItemUnmarshalKids, v)
+			}
+
+			for _, k := range kids {
+				f, ok := k.(float64)
+				if !ok {
+					return fmt.Errorf("%w: %v", errItemUnmarshalKids, v)
+				}
+
+				ret = append(ret, int(f))
+			}
+
+			i.Kids = ret
 		case "url":
 			u, err := url.Parse(v.(string))
 			if err != nil {
@@ -69,22 +128,46 @@ func (i *Item) UnmarshalJSON(b []byte) error {
 
 			i.URL = u
 		case "score":
-			i.Score = int(v.(float64))
-		case "title":
-			i.Title = v.(string)
-		case "parts":
-			converted := []int{}
-
-			for _, sub := range v.([]interface{}) {
-				f := sub.(float64)
-				converted = append(converted, int(f))
+			floatScore, ok := v.(float64)
+			if !ok {
+				return fmt.Errorf("%w: %v", errItemUnmarshalScore, v)
 			}
 
-			i.Parts = converted
+			i.Score = int(floatScore)
+		case "title":
+			strTitle, ok := v.(string)
+			if !ok {
+				return fmt.Errorf("%w: %v", errItemUnmarshalTitle, v)
+			}
+
+			i.Title = strTitle
+		case "parts":
+			ret := []int{}
+
+			parts, ok := v.([]interface{})
+			if !ok {
+				return fmt.Errorf("%w: %v", errItemUnmarshalParts, v)
+			}
+
+			for _, p := range parts {
+				f, ok := p.(float64)
+				if !ok {
+					return fmt.Errorf("%w: %v", errItemUnmarshalDescendants, v)
+				}
+
+				ret = append(ret, int(f))
+			}
+
+			i.Parts = ret
 		case "descendants":
-			i.Descendants = int(v.(float64))
+			floatDescendants, ok := v.(float64)
+			if !ok {
+				return fmt.Errorf("%w: %v", errItemUnmarshalDescendants, v)
+			}
+
+			i.Descendants = int(floatDescendants)
 		default:
-			return fmt.Errorf("%w: %v", errUnknownKey, strings.ToLower(k))
+			return fmt.Errorf("%w: %v", errItemUnmarshalUnknownKey, strings.ToLower(k))
 		}
 	}
 

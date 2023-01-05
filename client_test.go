@@ -27,6 +27,7 @@ func TestItem(t *testing.T) {
 	id := 8863
 
 	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+
 	testContent, err := os.Open(testContentPath)
 	if err != nil {
 		t.Fatal(err)
@@ -53,6 +54,7 @@ func TestUser(t *testing.T) {
 	id := "asicsp"
 
 	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+
 	testContent, err := os.Open(testContentPath)
 	if err != nil {
 		t.Fatal(err)
@@ -79,6 +81,7 @@ func TestItemComment(t *testing.T) {
 	id := 2921983
 
 	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+
 	testContent, err := os.Open(testContentPath)
 	if err != nil {
 		t.Fatal(err)
@@ -105,6 +108,7 @@ func TestItemAsk(t *testing.T) {
 	id := 121003
 
 	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+
 	testContent, err := os.Open(testContentPath)
 	if err != nil {
 		t.Fatal(err)
@@ -131,6 +135,7 @@ func TestItemJob(t *testing.T) {
 	id := 192327
 
 	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+
 	testContent, err := os.Open(testContentPath)
 	if err != nil {
 		t.Fatal(err)
@@ -157,6 +162,7 @@ func TestItemPoll(t *testing.T) {
 	id := 126809
 
 	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+
 	testContent, err := os.Open(testContentPath)
 	if err != nil {
 		t.Fatal(err)
@@ -183,6 +189,7 @@ func TestItemPollOpt(t *testing.T) {
 	id := 126810
 
 	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+
 	testContent, err := os.Open(testContentPath)
 	if err != nil {
 		t.Fatal(err)
@@ -207,6 +214,7 @@ func TestItemPollOpt(t *testing.T) {
 
 func TestMaxItem(t *testing.T) {
 	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+
 	testContent, err := os.Open(testContentPath)
 	if err != nil {
 		t.Fatal(err)
@@ -231,6 +239,7 @@ func TestMaxItem(t *testing.T) {
 
 func TestTopStories(t *testing.T) {
 	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+
 	testContent, err := os.Open(testContentPath)
 	if err != nil {
 		t.Fatal(err)
@@ -255,6 +264,7 @@ func TestTopStories(t *testing.T) {
 
 func TestNewStories(t *testing.T) {
 	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+
 	testContent, err := os.Open(testContentPath)
 	if err != nil {
 		t.Fatal(err)
@@ -279,6 +289,7 @@ func TestNewStories(t *testing.T) {
 
 func TestBestStories(t *testing.T) {
 	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+
 	testContent, err := os.Open(testContentPath)
 	if err != nil {
 		t.Fatal(err)
@@ -303,6 +314,7 @@ func TestBestStories(t *testing.T) {
 
 func TestAskStories(t *testing.T) {
 	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+
 	testContent, err := os.Open(testContentPath)
 	if err != nil {
 		t.Fatal(err)
@@ -327,6 +339,7 @@ func TestAskStories(t *testing.T) {
 
 func TestShowStories(t *testing.T) {
 	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+
 	testContent, err := os.Open(testContentPath)
 	if err != nil {
 		t.Fatal(err)
@@ -351,6 +364,7 @@ func TestShowStories(t *testing.T) {
 
 func TestJobStories(t *testing.T) {
 	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+
 	testContent, err := os.Open(testContentPath)
 	if err != nil {
 		t.Fatal(err)
@@ -375,6 +389,7 @@ func TestJobStories(t *testing.T) {
 
 func TestUpdates(t *testing.T) {
 	testContentPath := fmt.Sprintf("testdata/%s", t.Name())
+
 	testContent, err := os.Open(testContentPath)
 	if err != nil {
 		t.Fatal(err)
