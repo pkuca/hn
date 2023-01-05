@@ -25,7 +25,7 @@ var (
 	errUserUnmarshalCreated   = errors.New("user unmarshal failed on 'created' field")
 	errUserUnmarshalKarma     = errors.New("user unmarshal failed on 'karma' field")
 	errUserUnmarshalAbout     = errors.New("user unmarshal failed on 'about' field")
-	errUserUnmarshalSubmitted = errors.New("user unmarshal failed on 'submited' field")
+	errUserUnmarshalSubmitted = errors.New("user unmarshal failed on 'submitted' field")
 
 	errUserUnmarshalUnknownKey = errors.New("user unmarshal failed on unknown key")
 )
